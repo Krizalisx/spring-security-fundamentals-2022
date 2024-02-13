@@ -1,11 +1,18 @@
-package spring.security.fundamentals.config.security.authentication;
+package spring.security.fundamentals.security.authentication;
 
 import java.util.Collection;
 import javax.security.auth.Subject;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-public record CustomAuthentication(boolean isAuthenticated, String key) implements Authentication {
+@Getter
+@AllArgsConstructor
+public class ApiKeyAuthentication implements Authentication {
+
+    private boolean isAuthenticated;
+    private String key;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -28,15 +35,18 @@ public record CustomAuthentication(boolean isAuthenticated, String key) implemen
     }
 
     @Override
-    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
+    public boolean isAuthenticated() {
+        return this.isAuthenticated;
     }
 
-
+    @Override
+    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+        this.isAuthenticated = isAuthenticated;
+    }
 
     @Override
     public String getName() {
-        return null;
+        return "ApiKeyAuthentication";
     }
 
     @Override

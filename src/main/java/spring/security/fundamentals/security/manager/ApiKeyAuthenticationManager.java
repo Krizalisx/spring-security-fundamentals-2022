@@ -1,18 +1,16 @@
-package spring.security.fundamentals.config.security.manager;
+package spring.security.fundamentals.security.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.stereotype.Component;
-import spring.security.fundamentals.config.security.provider.CustomAuthenticationProvider;
+import spring.security.fundamentals.security.provider.ApiKeyAuthenticationProvider;
 
-@Component
 @RequiredArgsConstructor
-public class CustomAuthenticationManager implements AuthenticationManager {
+public class ApiKeyAuthenticationManager implements AuthenticationManager {
 
-    private final CustomAuthenticationProvider provider; // there can be multiple providers
+    private final ApiKeyAuthenticationProvider provider; // there can be multiple providers
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
