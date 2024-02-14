@@ -1,7 +1,5 @@
 package spring.security.fundamentals.controller;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,11 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class DemoController {
 
-    @GetMapping("/hello")
-    public String hello() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication);
-        return "hello";
+
+    @GetMapping("/demo")
+    public String demo() {
+        return "Demo!";
     }
 
 }
