@@ -2,8 +2,8 @@ package spring.security.fundamentals.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
@@ -15,22 +15,14 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security, UserDetailsService userDetailsService) throws Exception {
         return security.httpBasic(Customizer.withDefaults())
             .authorizeHttpRequests(customizer -> customizer
-//                .anyRequest().permitAll()
-//                .anyRequest().denyAll()
-//                .anyRequest().hasAuthority("read")
-//                .anyRequest().hasAnyAuthority("read", "write")
-//                .anyRequest().hasRole("USER")
-//                .anyRequest().hasAnyRole("USER", "ADMIN")
-                    .requestMatchers("/api/demo").permitAll()
-                    .requestMatchers("/api/demo3").hasAuthority("read")
-                    .requestMatchers(HttpMethod.POST).hasAuthority("write")
-                    .anyRequest().authenticated()
+                .anyRequest().authenticated()
             )
             .csrf(AbstractHttpConfigurer::disable)
             .build();
@@ -45,7 +37,7 @@ public class SecurityConfig {
             .build();
 
         UserDetails user2 = User.withUsername("krizalis2")
-            .password(passwordEncoder().encode("password2"))
+            .password(passwordEncoder().encode("password"))
             .authorities("write")
             .build();
 
