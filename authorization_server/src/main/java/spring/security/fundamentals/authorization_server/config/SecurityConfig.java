@@ -9,6 +9,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Collection;
 import java.util.UUID;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -32,8 +34,6 @@ import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-    //
 
     @Bean
     @Order(1)
@@ -118,6 +118,8 @@ public class SecurityConfig {
     public OAuth2TokenCustomizer<JwtEncodingContext> oauth2TokenCustomizer() {
         return context -> {
             context.getClaims().claim("testName", "testValue");
+            Collection<? extends GrantedAuthority> authorities = context.getPrincipal().getAuthorities();
+            context.getClaims().claim("authorities", authorities.stream().map(GrantedAuthority::getAuthority).toList());
         };
     }
 
