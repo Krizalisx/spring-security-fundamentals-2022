@@ -6,5 +6,5 @@ logging:
     org.springframework.security: TRACE
 
 security:
-  jwt:
-    issuer-uri: http://localhost:8080/oauth2/jwks
+  token:
+    introspection-uri: http://localhost:8080/oauth2/introspect

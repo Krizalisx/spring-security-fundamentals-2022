@@ -23,7 +23,7 @@ public class ClientMapper {
                 .redirectUri(client.getRedirectUri())
                 .scope(client.getScope())
                 .tokenSettings(TokenSettings.builder()
-                        .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
+                        .accessTokenFormat(OAuth2TokenFormat.REFERENCE)
                         .build())
                 .build();
     }

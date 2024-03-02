@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class DemoController {
 
-    @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/demo")
     public String demo() {
         return "demo";
+    }
+
+    @PreAuthorize("hasAuthority('READ')")
+    @GetMapping("/demo1")
+    public String demo1() {
+        return "demo1";
     }
 
     @PreAuthorize("hasAuthority('PATCH')")

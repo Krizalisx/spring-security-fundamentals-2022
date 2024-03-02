@@ -11,18 +11,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Value("${security.jwt.issuer-uri}")
-    private String issuerUri;
+    @Value("${security.token.introspection-uri}")
+    private String introspectionUri;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
             .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
             .oauth2ResourceServer(configurer -> configurer
-                .jwt(jwtConfigurer -> jwtConfigurer
-                    .jwtAuthenticationConverter(new CustomJwtAuthenticationTokenConverter())
-                    .jwkSetUri(issuerUri)))
+                .opaqueToken(opaqueTokenConfigurer -> opaqueTokenConfigurer
+                    .introspectionUri(introspectionUri)
+                    .introspectionClientCredentials("client", "secret")))
             .build();
     }
-
 }
