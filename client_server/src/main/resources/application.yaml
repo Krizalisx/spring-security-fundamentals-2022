@@ -1,0 +1,7 @@
+spring:
+  application:
+   name: client_server
+
+server:
+  port: 8082
+

@@ -16,27 +16,28 @@ public class ClientMapper {
             return null;
         }
         return RegisteredClient.withId(client.getId().toString())
-                .clientId(client.getClientId())
-                .clientSecret(client.getSecret())
-                .clientAuthenticationMethod(new ClientAuthenticationMethod(client.getAuthMethod()))
-                .authorizationGrantType(new AuthorizationGrantType(client.getGrantType()))
-                .redirectUri(client.getRedirectUri())
-                .scope(client.getScope())
-                .tokenSettings(TokenSettings.builder()
-                        .accessTokenFormat(OAuth2TokenFormat.REFERENCE)
-                        .build())
-                .build();
+            .clientId(client.getClientId())
+            .clientSecret(client.getSecret())
+            .clientAuthenticationMethod(new ClientAuthenticationMethod(client.getAuthMethod()))
+            .authorizationGrantType(new AuthorizationGrantType(client.getGrantType()))
+            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+            .redirectUri(client.getRedirectUri())
+            .scope(client.getScope())
+            .tokenSettings(TokenSettings.builder()
+                .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
+                .build())
+            .build();
     }
 
     public static Client mapToClient(RegisteredClient registeredClient) {
         return Client.builder()
-                .id(Long.valueOf(registeredClient.getId()))
-                .clientId(registeredClient.getClientId())
-                .secret(registeredClient.getClientSecret())
-                .authMethod(registeredClient.getClientAuthenticationMethods().stream().findFirst().get().toString())
-                .grantType(registeredClient.getAuthorizationGrantTypes().stream().findFirst().get().toString())
-                .redirectUri(registeredClient.getRedirectUris().stream().findFirst().get())
-                .scope(registeredClient.getScopes().stream().findFirst().get())
-                .build();
+            .id(Long.valueOf(registeredClient.getId()))
+            .clientId(registeredClient.getClientId())
+            .secret(registeredClient.getClientSecret())
+            .authMethod(registeredClient.getClientAuthenticationMethods().stream().findFirst().get().toString())
+            .grantType(registeredClient.getAuthorizationGrantTypes().stream().findFirst().get().toString())
+            .redirectUri(registeredClient.getRedirectUris().stream().findFirst().get())
+            .scope(registeredClient.getScopes().stream().findFirst().get())
+            .build();
     }
 }
